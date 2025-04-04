@@ -1,19 +1,35 @@
-# exom (work in progress)
+# Monotype
 
-## Design notes
+A 20% project.
 
-chaine (type 1bit) -> 64bit (nombre, chaine*) 
-                   -> 64bit adresse 
-          
-paul.adresse.code-postal = 2428 
-*.adresse.code-postal == 2428 --> (paul) 
-paul.depenses.valeur = (12.4, 23.4, ...)  # syntaxe pour faciliter saisie, depend du langage hote  
-paul.depenses.date = (20031201, 20031204, ...) 
+## Introduction
 
-cercle.r = 2 
-cercle.centre.x = 0 
-cercle.centre.y = 1 
-cercle -> adresse 
-cercle.* -> (champs) 
+C interface as functions, later sugar-coat in each host language.
 
-Comment detecter retour de bloc (ramasse-miette) 
+Start with basic features, then improve for performance:
+- keep design as simple as possible
+- improve with a general cache mechanism
+
+## Structure
+
+
+node = array [ key (string | index), value (int | float | string | node) ]
+
+Root node omitted.
+```
+SET x = 2
+    node K="x" I=1 V=int:2
+    GET x => 2
+    GET 1 => 2
+
+
+```
+
+## Implementation notes
+
+Performance: 
+- array: linked small arrays (faster inserts)
+- string: internalize
+
+Features:
+- how to implement garbage collection?
