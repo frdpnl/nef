@@ -20,7 +20,7 @@ Start with basic features, then improve for performance.
 node = key value link
 
 key = string
-value = array of (int | float | string) 
+value = array of int or float or string
 link = array of key
 
 
