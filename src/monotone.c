@@ -5,7 +5,10 @@
 #define VECSZ 64
 #endif
 
-// TODO typedef to distinguish the 2 vectors...
+// TODO
+// interned strings, for key, string locations
+// interned locations, memory pool, for chained vector
+// test coverage
 
 typedef struct Vector_ {
     uint64_t n;  /* length of payload */
@@ -13,8 +16,6 @@ typedef struct Vector_ {
     /* 
      * --- typ[0] describes the full raw array ---
      *  0x00: empty
-     *  0x_1: type is values, 'val
-     *  0x_2: type is sub-points, 'sub
      *  0x10: is there a chained vector
      * --- typ[i] for values ---
      *  0x00: empty (null)
@@ -33,6 +34,9 @@ typedef struct Vector_ {
      * --- raw[i] for sub-keys: key location
      */
 } Vector;
+
+typedef Vector Values;
+typedef Vector Subkeys;
 
 typedef struct Point_ {
     uint64_t key;
