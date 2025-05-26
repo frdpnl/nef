@@ -1,46 +1,40 @@
 
+#include <stdio.h>
 #include <stdint.h>
 
-#ifndef VECSZ
-#define VECSZ 64
+#ifndef BLKSZ
+#define BLKSZ 64
 #endif
 
-// TODO
-// interned strings, for key, string locations
-// interned locations, memory pool, for chained vector
-// test coverage
-
-typedef struct Vector_ {
+typedef struct List_ {
     uint64_t n;  /* length of payload */
-    unsigned char typ[VECSZ];
-    /* 
-     * --- typ[0] describes the full raw array ---
+    uint64_t prev; /* 0: none */
+    uint64_t next; /* 0: none */
+    unsigned char type[BLKSZ];
+    /* --- common ---
      *  0x00: empty
-     *  0x10: is there a chained vector
      * --- typ[i] for values ---
-     *  0x00: empty (null)
      *  0x01: uint64
      *  0x02: int64
      *  0x03: double
      *  0x04: string location
      * --- typ[i] for sub-keys ---
-     *  0x00: empty (null)
      *  0x10: key location 
      */
-    uint64_t raw[VECSZ];
+    uint64_t block[BLKSZ];
     /*
-     * --- raw[0] next vector location ---
-     * --- raw[i] for values:  value of indicated type
-     * --- raw[i] for sub-keys: key location
+     * --- block[i] for values:  value of indicated type
+     * --- block[i] for sub-keys: key location, sorted
      */
-} Vector;
+} List;
 
-typedef Vector Values;
-typedef Vector Subkeys;
+typedef List Values;
+typedef List Subkeys;
 
-typedef struct Point_ {
+typedef struct KV_ {
     uint64_t key;
     Values val;
     Subkeys sub;
-} Point;
+} KV;
+
 
