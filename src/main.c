@@ -29,12 +29,12 @@ typedef struct List_ {
 } List;
 
 typedef List Values;
-typedef List Subkeys;
+typedef List Links;
 
 typedef struct KV_ {
     uint64_t key;
     Values val;
-    Subkeys sub;
+    Links lnk;
 } KV;
 
 
